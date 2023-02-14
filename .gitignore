@@ -58,3 +58,9 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+PPVB_EndlessRunner/.idea/
+PPVB_EndlessRunner/Library/
+PPVB_EndlessRunner/UserSettings/
+PPVB_EndlessRunner/obj/
+PPVB_EndlessRunner/Logs/
+PPVB_EndlessRunner/Temp/
