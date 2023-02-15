@@ -8,4 +8,14 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField] float startPositionX;
     [SerializeField] float top;
     [SerializeField] float bottom;
+
+    void GenerateFloor()
+    {
+        
+    }
+
+    void GeneratePlatforms()
+    {
+        
+    }
 }

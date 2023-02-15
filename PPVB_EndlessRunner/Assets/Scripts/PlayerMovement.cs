@@ -52,9 +52,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump() => rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + -(Vector3.up * 2f));
-    }
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawLine(transform.position, transform.position + -(Vector3.up * 2f));
+    // }
 }
