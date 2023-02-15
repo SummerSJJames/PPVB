@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] string horizontalAxisName = "Horizontal";
     [SerializeField] string jumpButton = "w";
     [SerializeField] float jumpForce = 1;
+    [SerializeField] Transform bottomLeft;
+    [SerializeField] Transform bottomRight;
 
     void Start()
     {
@@ -21,13 +23,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(jumpButton) && IsGrounded())
+        MovePlayer();
+
+        if (Input.GetKeyDown(jumpButton))
         {
             Debug.Log("JUMP!");
-            Jump();
+            if (IsGrounded())
+            {
+                Debug.Log("Should jump");
+                Jump();
+            }
         }
-
-        MovePlayer();
     }
 
     void MovePlayer()
@@ -38,14 +44,17 @@ public class PlayerMovement : MonoBehaviour
 
     bool IsGrounded()
     {
-        RaycastHit2D ground = Physics2D.Raycast(transform.position, Vector2.down, 2f);
-        return ground.collider.gameObject.layer == 6;
+        var ground1 = Physics2D.Raycast(bottomLeft.position, Vector2.down, 0.1f);
+        var ground2 = Physics2D.Raycast(bottomRight.position, Vector2.down, 0.1f);
+        return ground1.collider && ground1.collider.gameObject.CompareTag("Ground") ||
+               ground2.collider && ground2.collider.gameObject.CompareTag("Ground");
     }
 
     void Jump() => rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, transform.position + -(Vector3.up * 2));
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + -(Vector3.up * 2f));
     }
 }
