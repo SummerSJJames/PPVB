@@ -5,18 +5,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-
     public bool multiplayer;
 
     void Awake()
     {
-        if (instance)
-        {
-            if (instance != this) Destroy(gameObject);
-        }
-        else instance = this;
-
         DontDestroyOnLoad(gameObject);
     }
 
