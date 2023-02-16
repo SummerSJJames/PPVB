@@ -16,9 +16,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform bottomLeft;
     [SerializeField] Transform bottomRight;
 
+    SpriteRenderer sRenderer;
+    Animator animator;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         //groundDistance = GetComponent<Collider2D>().bounds.extents.y;
     }
 
@@ -27,13 +31,20 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
 
         if (Input.GetKeyDown(jumpButton) && IsGrounded())
+        {
             Jump();
+            animator.SetTrigger("Jump");
+        }
     }
 
     void MovePlayer()
     {
         var horizontal = Input.GetAxisRaw(horizontalAxisName);
+        sRenderer.flipX = horizontal < 0;
         rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
+        
+        // if (horizontal > 0) sRenderer.flipX = false;
+        // else if (horizontal < 0) sRenderer.flipX = true;
     }
 
     bool IsGrounded()
