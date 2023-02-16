@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TerrainGenerator : MonoBehaviour
 {
+    [SerializeField] Transform focusedPlayer;
+    
     [SerializeField] GameObject tile;
     [SerializeField] float startPositionX;
     [SerializeField] float top;

@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool IsGrounded()
     {
-        //Raycasting to see if either the left or right side of the player is close enough to the ground
+        //Ray casting to see if either the left or right side of the player is close enough to the ground
         var ground1 = Physics2D.Raycast(bottomLeft.position, Vector2.down, groundDistance);
         var ground2 = Physics2D.Raycast(bottomRight.position, Vector2.down, groundDistance);
         return ground1.collider && ground1.collider.gameObject.CompareTag("Ground") ||

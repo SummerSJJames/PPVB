@@ -16,10 +16,10 @@ public class PlayerBoundary : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < players.Length; i++)
-        {
-            players[i].outsideBounds = players[i].transform.position.x < boundaryLeft ||
-                                       players[i].transform.position.x > boundaryRight;
-        }
+        //foreach (var p in players)
+        //{
+            //p.outsideBounds = p.transform.position.x < boundaryLeft ||
+                              //p.transform.position.x > boundaryRight;
+        //}
     }
 }

@@ -20,4 +20,9 @@ public class PlayerManager : MonoBehaviour
         players[0].SetActive(true);
         players[1].SetActive(gm.multiplayer);
     }
+
+    public void Lose(Player player)
+    {
+        
+    }
 }
