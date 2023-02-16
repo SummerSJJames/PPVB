@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     
     public bool multiplayer;
+    public float timePlayed;
 
     void Awake()
     {
@@ -23,5 +24,11 @@ public class GameManager : MonoBehaviour
     public void SetMultiplayer(bool b)
     {
         multiplayer = b;
+    }
+
+    void Update()
+    {
+        if (timePlayed < float.MaxValue) timePlayed += Time.deltaTime;
+        else timePlayed = float.MaxValue;
     }
 }
