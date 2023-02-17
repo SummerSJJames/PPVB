@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class TerrainGenerator : MonoBehaviour
 {
     bool generatingHole;
+    bool canGenerateHole = true;
     [SerializeField] Transform tile;
     [SerializeField] Transform obstacle;
     [SerializeField] float startPositionX;
@@ -34,13 +35,12 @@ public class TerrainGenerator : MonoBehaviour
             //We check if the last tile has moved left bij set amount;
             if (lastTile.position.x <= startPositionX - 0.45f)
             {
-                lastTile = SpawnTile(tile, new Vector2(startPositionX, floorLevel), quaternion.identity);
                 //If the random decides we want a gap in the terrain
-                if (Random.Range(0, randomOdds) == 0)
+                if (canGenerateHole && Random.Range(0, randomOdds) == 0)
                 {
                     generatingHole = true;
-                    int odds = 1;
-                    float distance = 0.45f;
+                    int odds = 2;
+                    float distance = 1.35f;
                     while (generatingHole)
                     {
                         //If the last tile has moved by the distance
@@ -58,6 +58,7 @@ public class TerrainGenerator : MonoBehaviour
 
                         yield return null;
                     }
+                    StartCoroutine(TimeBeforeHole());
                 }
                 else
                     lastTile = SpawnTile(tile, new Vector2(startPositionX, floorLevel), quaternion.identity);
@@ -65,6 +66,13 @@ public class TerrainGenerator : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    IEnumerator TimeBeforeHole()
+    {
+        canGenerateHole = false;
+        yield return new WaitForSeconds(Random.Range(0, 5));
+        canGenerateHole = true;
     }
 
     IEnumerator SpawnObstacle()
