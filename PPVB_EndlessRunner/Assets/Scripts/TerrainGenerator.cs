@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class TerrainGenerator : MonoBehaviour
 {
     [SerializeField] Transform tile;
+    [SerializeField] Transform obstacle;
     [SerializeField] float startPositionX;
     [SerializeField] float floorLevel;
     
@@ -62,6 +63,11 @@ public class TerrainGenerator : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    void SpawnObstacle()
+    {
+        
     }
 
     Transform SpawnTile(Transform t, Vector2 pos, quaternion rot)

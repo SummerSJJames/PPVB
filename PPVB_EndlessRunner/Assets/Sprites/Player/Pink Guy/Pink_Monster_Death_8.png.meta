@@ -42,7 +42,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -103,7 +103,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Pink_Monster_Death_8_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 0
+        width: 21
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f89eab44a232e1147a3e10752334cda8
+      internalID: -12412040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink_Monster_Death_8_1
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 2
+        width: 22
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c62207b1985dd29449af93474ceae88f
+      internalID: -523463835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -114,7 +156,18 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Pink_Monster_Death_8_0: -12412040
+      Pink_Monster_Death_8_2: 1446252430
+      Pink_Monster_Death_8_5: 276719455
+      Pink_Monster_Death_8_4: -268967888
+      Pink_Monster_Death_8_7: 1018709082
+      Pink_Monster_Death_8_8: 1043581438
+      Pink_Monster_Death_8_10: 1711287790
+      Pink_Monster_Death_8_6: -1520646452
+      Pink_Monster_Death_8_3: 787944939
+      Pink_Monster_Death_8_9: -1948854240
+      Pink_Monster_Death_8_1: -523463835
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

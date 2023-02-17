@@ -8,7 +8,10 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
     [SerializeField] float groundDistance = 0.1f;
+    bool jumping;
+
     [SerializeField] float moveSpeed = 1;
+
     //Making these editable variables so they can be changed per player
     [SerializeField] string horizontalAxisName = "Horizontal";
     [SerializeField] string jumpButton = "w";
@@ -18,10 +21,12 @@ public class PlayerMovement : MonoBehaviour
 
     SpriteRenderer sRenderer;
     Animator animator;
+    [SerializeField] Animator dust;
+    SpriteRenderer dustRenderer;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        sRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         //groundDistance = GetComponent<Collider2D>().bounds.extents.y;
     }
@@ -30,19 +35,33 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
 
-        if (Input.GetKeyDown(jumpButton) && IsGrounded())
+        if (IsGrounded())
         {
-            Jump();
-            animator.SetTrigger("Jump");
+            jumping = false;
+            animator.SetTrigger("Run");
+            dust.SetTrigger("Run");
+            if (Input.GetKeyDown(jumpButton))
+            {
+                Jump();
+                jumping = true;
+                animator.SetTrigger("Jump");
+                dust.SetTrigger("Jump");
+            }
+        }
+        else if (!jumping)
+        {
+            animator.SetTrigger("Fall");
+            dust.SetTrigger("Fall");
         }
     }
 
     void MovePlayer()
     {
         var horizontal = Input.GetAxisRaw(horizontalAxisName);
-        sRenderer.flipX = horizontal < 0;
+        Vector3 scale = new Vector3(horizontal < 0 ? -4.5f : 4.5f, 4.5f, 4.5f);
+        transform.localScale = scale;
         rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
-        
+
         // if (horizontal > 0) sRenderer.flipX = false;
         // else if (horizontal < 0) sRenderer.flipX = true;
     }
