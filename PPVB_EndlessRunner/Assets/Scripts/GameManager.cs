@@ -33,4 +33,10 @@ public class GameManager : MonoBehaviour
         if (timePlayed < float.MaxValue) timePlayed += Time.deltaTime;
         else timePlayed = float.MaxValue;
     }
+
+    public void GameOver()
+    {
+        FindObjectOfType<GameOverManager>().gameOverScreen.SetActive(true);
+        gameRunning = false;
+    }
 }

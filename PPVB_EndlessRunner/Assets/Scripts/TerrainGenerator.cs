@@ -7,11 +7,12 @@ using Random = UnityEngine.Random;
 
 public class TerrainGenerator : MonoBehaviour
 {
+    bool generatingHole;
     [SerializeField] Transform tile;
     [SerializeField] Transform obstacle;
     [SerializeField] float startPositionX;
     [SerializeField] float floorLevel;
-    
+
     [SerializeField] bool optionalSecondTerrain;
     [SerializeField] float optionalSecondaryFloorLevel;
     Transform lastTile;
@@ -19,12 +20,13 @@ public class TerrainGenerator : MonoBehaviour
     void Start()
     {
         StartCoroutine(GenerateFloor());
+        StartCoroutine(SpawnObstacle());
     }
 
     IEnumerator GenerateFloor()
     {
         yield return new WaitUntil(() => GameManager.instance.gameRunning);
-        bool random;
+        //bool generatingHole;
         int randomOdds = 5;
         lastTile = SpawnTile(tile, new Vector2(startPositionX, floorLevel), quaternion.identity);
         while (GameManager.instance.gameRunning)
@@ -36,10 +38,10 @@ public class TerrainGenerator : MonoBehaviour
                 //If the random decides we want a gap in the terrain
                 if (Random.Range(0, randomOdds) == 0)
                 {
-                    random = true;
+                    generatingHole = true;
                     int odds = 1;
                     float distance = 0.45f;
-                    while (random)
+                    while (generatingHole)
                     {
                         //If the last tile has moved by the distance
                         if (lastTile.position.x <= startPositionX - distance)
@@ -51,7 +53,7 @@ public class TerrainGenerator : MonoBehaviour
                                 odds++;
                                 distance += 0.45f;
                             }
-                            else random = false;
+                            else generatingHole = false;
                         }
 
                         yield return null;
@@ -65,9 +67,17 @@ public class TerrainGenerator : MonoBehaviour
         }
     }
 
-    void SpawnObstacle()
+    IEnumerator SpawnObstacle()
     {
-        
+        while (GameManager.instance.gameRunning)
+        {
+            if (!generatingHole)
+            {
+                Instantiate(obstacle, new Vector2(startPositionX, floorLevel + 0.7f), quaternion.identity);
+                yield return new WaitForSeconds(Random.Range(2, 6));
+            }
+            else yield return null;
+        }
     }
 
     Transform SpawnTile(Transform t, Vector2 pos, quaternion rot)

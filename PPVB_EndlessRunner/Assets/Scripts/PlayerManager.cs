@@ -23,6 +23,12 @@ public class PlayerManager : MonoBehaviour
 
     public void Lose(Player player)
     {
+        Debug.Log("Game over");
+        foreach (var p in players)
+        {
+            p.GetComponent<Player>().enabled = false;
+        }
         
+        GameManager.instance.GameOver();
     }
 }

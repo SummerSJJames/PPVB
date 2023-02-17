@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.instance.gameRunning) return;
+        
         MovePlayer();
 
         if (IsGrounded())

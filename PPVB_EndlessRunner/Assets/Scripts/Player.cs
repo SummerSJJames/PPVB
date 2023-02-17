@@ -6,6 +6,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public bool outsideBounds;
+    public string playerName;
+
+    [SerializeField] Transform boundaryBubble;
     SpriteRenderer sRenderer;
     [SerializeField] float outsideTimeLimit;
     PlayerManager manager;
@@ -15,6 +18,7 @@ public class Player : MonoBehaviour
     {
         sRenderer = GetComponent<SpriteRenderer>();
         manager = FindObjectOfType<PlayerManager>();
+        boundaryBubble.gameObject.SetActive(false);
     }
 
     void Update()
@@ -23,6 +27,8 @@ public class Player : MonoBehaviour
 
         if (outsideBounds)
         {
+            boundaryBubble.gameObject.SetActive(true);
+            boundaryBubble.position = new Vector3(-8, transform.position.y, 0);
             timer += Time.deltaTime;
 
             if (timer >= outsideTimeLimit)
@@ -31,7 +37,11 @@ public class Player : MonoBehaviour
                 manager.Lose(this);
             }
         }
-        else timer = 0;
+        else
+        {
+            timer = 0;
+            boundaryBubble.gameObject.SetActive(false);
+        }
 
         if (transform.position.y <= -5.5f)
         {
