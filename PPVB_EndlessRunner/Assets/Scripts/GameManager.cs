@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public bool gameRunning;
     
     public bool multiplayer;
     public float timePlayed;
@@ -17,7 +18,8 @@ public class GameManager : MonoBehaviour
             if (instance != this) Destroy(gameObject);
         }
         else instance = this;
-        
+
+        gameRunning = true;
         DontDestroyOnLoad(gameObject);
     }
 
