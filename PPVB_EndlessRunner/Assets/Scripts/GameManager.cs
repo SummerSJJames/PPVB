@@ -7,9 +7,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public bool gameRunning;
-    
+
     public bool multiplayer;
     public float timePlayed;
+
+    [SerializeField] float maxSpeed;
+    [HideInInspector] public float speed = 1;
 
     void Awake()
     {
@@ -23,6 +26,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Start()
+    {
+        speed = 1f;
+    }
+
     public void SetMultiplayer(bool b)
     {
         multiplayer = b;
@@ -32,6 +40,8 @@ public class GameManager : MonoBehaviour
     {
         if (timePlayed < float.MaxValue) timePlayed += Time.deltaTime;
         else timePlayed = float.MaxValue;
+
+        if (speed < maxSpeed) speed += Time.deltaTime * 0.1f;
     }
 
     public void GameOver()

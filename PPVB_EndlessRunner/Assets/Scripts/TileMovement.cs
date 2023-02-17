@@ -10,6 +10,7 @@ public class TileMovement : MonoBehaviour
 
     void Update()
     {
+        speed = GameManager.instance.speed;
         transform.position += direction * (speed * Time.deltaTime);
     }
     

@@ -30,7 +30,7 @@ public class TerrainGenerator : MonoBehaviour
         //bool generatingHole;
         int randomOdds = 5;
         lastTile = SpawnTile(tile, new Vector2(startPositionX, floorLevel), quaternion.identity);
-        while (GameManager.instance.gameRunning)
+        while (true)
         {
             //We check if the last tile has moved left bij set amount;
             if (lastTile.position.x <= startPositionX - 0.45f)
@@ -77,7 +77,7 @@ public class TerrainGenerator : MonoBehaviour
 
     IEnumerator SpawnObstacle()
     {
-        while (GameManager.instance.gameRunning)
+        while (true)
         {
             if (!generatingHole)
             {
