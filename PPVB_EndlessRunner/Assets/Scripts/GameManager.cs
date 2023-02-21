@@ -6,6 +6,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    public static string player1;
+    public static string player2;
+    
     public bool gameRunning;
 
     public bool multiplayer;

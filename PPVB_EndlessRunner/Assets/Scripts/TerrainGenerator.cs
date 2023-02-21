@@ -28,7 +28,7 @@ public class TerrainGenerator : MonoBehaviour
     {
         yield return new WaitUntil(() => GameManager.instance.gameRunning);
         //bool generatingHole;
-        int randomOdds = 5;
+        int randomOdds = 10;
         lastTile = SpawnTile(tile, new Vector2(startPositionX, floorLevel), quaternion.identity);
         while (true)
         {
