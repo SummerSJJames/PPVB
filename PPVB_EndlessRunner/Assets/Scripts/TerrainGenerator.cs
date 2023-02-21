@@ -32,15 +32,17 @@ public class TerrainGenerator : MonoBehaviour
         lastTile = SpawnTile(tile, new Vector2(startPositionX, floorLevel), quaternion.identity);
         while (true)
         {
-            //We check if the last tile has moved left bij set amount;
+            //We check if the last tile has moved left by set amount;
             if (lastTile.position.x <= startPositionX - 0.45f)
             {
                 //If the random decides we want a gap in the terrain
+                float xpos = lastTile.position.x + 0.49f;
                 if (canGenerateHole && Random.Range(0, randomOdds) == 0)
                 {
                     generatingHole = true;
                     int odds = 2;
                     float distance = 1.35f;
+                    xpos += 0.49f;
                     while (generatingHole)
                     {
                         //If the last tile has moved by the distance
@@ -52,16 +54,19 @@ public class TerrainGenerator : MonoBehaviour
                                 //We decrease the odds and increase the distance the block has to travel
                                 odds++;
                                 distance += 0.45f;
+                                xpos += 0.49f;
                             }
                             else generatingHole = false;
                         }
 
                         yield return null;
                     }
+
                     StartCoroutine(TimeBeforeHole());
                 }
-                else
-                    lastTile = SpawnTile(tile, new Vector2(startPositionX, floorLevel), quaternion.identity);
+
+                lastTile = SpawnTile(tile,
+                    new Vector2(xpos, floorLevel), quaternion.identity);
             }
 
             yield return null;
@@ -91,7 +96,7 @@ public class TerrainGenerator : MonoBehaviour
     Transform SpawnTile(Transform t, Vector2 pos, quaternion rot)
     {
         if (optionalSecondTerrain)
-            Instantiate(tile, new Vector2(startPositionX, optionalSecondaryFloorLevel), quaternion.identity);
+            Instantiate(t, new Vector2(pos.x, optionalSecondaryFloorLevel), rot);
         return Instantiate(t, pos, rot);
     }
 }

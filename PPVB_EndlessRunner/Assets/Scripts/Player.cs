@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
         manager = FindObjectOfType<PlayerManager>();
         boundaryBubble.gameObject.SetActive(false);
         countdown.text = "3";
+        GameManager.instance.speed = 1f;
     }
 
     void Update()
