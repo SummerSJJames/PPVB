@@ -15,6 +15,7 @@ public class MainMenuManager : MonoBehaviour
     void Start()
     {
         gm = FindObjectOfType<GameManager>();
+        TouchScreenKeyboard.Open("Keyboard yis");
         SetBorder();
     }
 
