@@ -10,8 +10,10 @@ public class Player : MonoBehaviour
     public bool outsideBounds;
     public string playerName;
 
+    PlayerMovement movement;
+    
     [SerializeField] Transform boundaryBubble;
-    SpriteRenderer sRenderer;
+    [SerializeField] SpriteRenderer sRenderer;
     [SerializeField] float outsideTimeLimit;
     [SerializeField] TMP_Text countdown;
     PlayerManager manager;
@@ -20,8 +22,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         timer = outsideTimeLimit;
-        sRenderer = GetComponent<SpriteRenderer>();
         manager = FindObjectOfType<PlayerManager>();
+        movement = GetComponent<PlayerMovement>();
         boundaryBubble.gameObject.SetActive(false);
         countdown.text = "3";
         GameManager.instance.speed = 1f;
@@ -36,13 +38,13 @@ public class Player : MonoBehaviour
             boundaryBubble.gameObject.SetActive(true);
             boundaryBubble.position = new Vector3(-8, transform.position.y, 0);
             timer -= Time.deltaTime;
-            countdown.text = timer.ToString("0");
 
             if (timer <= 0)
             {
                 //Destroy(gameObject);
                 manager.Lose(this);
             }
+            else countdown.text = timer.ToString("0");
         }
         else
         {
@@ -54,5 +56,10 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 5.25f, 0) ;
         }
+    }
+
+    public void Stun()
+    {
+        
     }
 }

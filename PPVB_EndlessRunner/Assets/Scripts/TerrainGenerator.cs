@@ -20,6 +20,10 @@ public class TerrainGenerator : MonoBehaviour
 
     void Start()
     {
+        //Making sure the testing code only happens in editor
+        #if (UNITY_EDITOR)
+            if (GameManager.instance.testing) return;
+        #endif
         StartCoroutine(GenerateFloor());
         StartCoroutine(SpawnObstacle());
     }
@@ -68,6 +72,8 @@ public class TerrainGenerator : MonoBehaviour
                 lastTile = SpawnTile(tile,
                     new Vector2(xpos, floorLevel), quaternion.identity);
             }
+            if (!lastTile) lastTile = SpawnTile(tile,
+                new Vector2(startPositionX, floorLevel), quaternion.identity);
 
             yield return null;
         }

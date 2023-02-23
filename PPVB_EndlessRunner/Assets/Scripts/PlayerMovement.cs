@@ -19,15 +19,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform bottomLeft;
     [SerializeField] Transform bottomRight;
 
-    SpriteRenderer sRenderer;
-    Animator animator;
+    [SerializeField] Animator animator;
     [SerializeField] Animator dust;
-    SpriteRenderer dustRenderer;
 
+    [SerializeField] GameObject graphics;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         //groundDistance = GetComponent<Collider2D>().bounds.extents.y;
     }
 
@@ -60,8 +58,9 @@ public class PlayerMovement : MonoBehaviour
     void MovePlayer()
     {
         var horizontal = Input.GetAxisRaw(horizontalAxisName);
-        Vector3 scale = new Vector3(horizontal < 0 ? -4.5f : 4.5f, 4.5f, 4.5f);
-        transform.localScale = scale;
+        Vector3 scale = new Vector3(horizontal < 0 ? -1 : 1, 1, 1);
+        graphics.transform.localScale = scale;
+
         rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
 
         // if (horizontal > 0) sRenderer.flipX = false;

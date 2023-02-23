@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     public static string player1;
     public static string player2;
+
+    public bool testing;
     
     public bool gameRunning;
 

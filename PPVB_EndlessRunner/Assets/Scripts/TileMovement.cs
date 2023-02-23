@@ -10,10 +10,14 @@ public class TileMovement : MonoBehaviour
 
     void Update()
     {
+        //Making sure the testing code only happens in editor
+        #if (UNITY_EDITOR)
+            if (GameManager.instance.testing) return;
+        #endif
         speed = GameManager.instance.speed;
         transform.position += direction * (speed * Time.deltaTime);
     }
-    
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Destroy")) Destroy(gameObject);

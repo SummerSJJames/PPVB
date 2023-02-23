@@ -16,8 +16,8 @@ TagManager:
   - UI
   - Ground
   - Obstacle
-  - 
-  - 
+  - Interactable
+  - UsedItem
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2247127057
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
@@ -53,6 +56,12 @@ TagManager:
   - name: Platform
     uniqueID: 4028564559
     locked: 0
+  - name: Item
+    uniqueID: 2823798807
+    locked: 0
   - name: Player
     uniqueID: 2801001401
+    locked: 0
+  - name: ItemArrow
+    uniqueID: 2434198917
     locked: 0
