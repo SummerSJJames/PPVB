@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 {
     public bool outsideBounds;
     public string playerName;
-
+    [SerializeField] float stunTime = 2;
     PlayerMovement movement;
     
     [SerializeField] Transform boundaryBubble;
@@ -60,6 +60,6 @@ public class Player : MonoBehaviour
 
     public void Stun()
     {
-        
+        movement.StartCoroutine(movement.Stunned(stunTime));
     }
 }

@@ -9,7 +9,6 @@ public class Throwable : MonoBehaviour, I_Pickup
     [SerializeField] float throwForce;
     [HideInInspector] public Vector2 direction;
     [HideInInspector] public ItemHandler player;
-    [SerializeField] GameObject explosion;
 
     int groundLayer = 6;
     Rigidbody2D rb;
@@ -28,7 +27,7 @@ public class Throwable : MonoBehaviour, I_Pickup
     public virtual void Use()
     {
         direction = player.throwDirection;
-        Debug.Log(direction);
+        //Debug.Log(direction);
         StartCoroutine(Move());
     }
 
@@ -37,16 +36,15 @@ public class Throwable : MonoBehaviour, I_Pickup
         rb.AddRelativeForce(direction * throwForce, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(5f);
-        Destroy(gameObject);
+        Landed();
     }
 
     protected virtual void Landed()
     {
-        Instantiate(explosion, transform.position, quaternion.identity);
-        Destroy(gameObject);
+        
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    protected virtual void OnCollisionEnter2D(Collision2D col)
     {
         if (!player || player.heldItem == this) return;
 

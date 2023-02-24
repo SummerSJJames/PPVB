@@ -82,7 +82,7 @@ public class TerrainGenerator : MonoBehaviour
     IEnumerator TimeBeforeHole()
     {
         canGenerateHole = false;
-        yield return new WaitForSeconds(Random.Range(0, 5));
+        yield return new WaitForSeconds(Random.Range(0.5f, 5) / GameManager.instance.speed);
         canGenerateHole = true;
     }
 
@@ -93,7 +93,7 @@ public class TerrainGenerator : MonoBehaviour
             if (!generatingHole)
             {
                 Instantiate(obstacle, new Vector2(startPositionX, floorLevel + 0.7f), quaternion.identity);
-                yield return new WaitForSeconds(Random.Range(2, 6));
+                yield return new WaitForSeconds(Random.Range(2, 6) / GameManager.instance.speed);
             }
             else yield return null;
         }

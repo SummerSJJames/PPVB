@@ -8,14 +8,18 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
     [SerializeField] float groundDistance = 0.1f;
+    [SerializeField] ParticleSystem stunParticles;
     bool jumping;
 
     [SerializeField] float moveSpeed = 1;
+    float speed;
 
     //Making these editable variables so they can be changed per player
     [SerializeField] string horizontalAxisName = "Horizontal";
     [SerializeField] string jumpButton = "w";
+    
     [SerializeField] float jumpForce = 1;
+    float jump;
     [SerializeField] Transform bottomLeft;
     [SerializeField] Transform bottomRight;
 
@@ -26,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        speed = moveSpeed;
+        jump = jumpForce;
         //groundDistance = GetComponent<Collider2D>().bounds.extents.y;
     }
 
@@ -61,10 +67,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 scale = new Vector3(horizontal < 0 ? -1 : 1, 1, 1);
         graphics.transform.localScale = scale;
 
-        rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
-
-        // if (horizontal > 0) sRenderer.flipX = false;
-        // else if (horizontal < 0) sRenderer.flipX = true;
+        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
     bool IsGrounded()
@@ -76,11 +79,18 @@ public class PlayerMovement : MonoBehaviour
                ground2.collider && ground2.collider.gameObject.CompareTag("Ground");
     }
 
-    void Jump() => rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+    void Jump() => rb.velocity = new Vector2(rb.velocity.x, jump);
 
-    // void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawLine(transform.position, transform.position + -(Vector3.up * 2f));
-    // }
+    public IEnumerator Stunned(float time)
+    {
+        Debug.Log("Stun");
+        speed = moveSpeed / 2;
+        jump = jumpForce / 2;
+        stunParticles.Play();
+        yield return new WaitForSeconds(time / GameManager.instance.speed);
+        speed = moveSpeed;
+        jump = jumpForce;
+        stunParticles.Stop();
+        Debug.Log("Finished stun");
+    }
 }
