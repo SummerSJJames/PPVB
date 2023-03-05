@@ -2962,8 +2962,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb78c6c772d498d4aaab86dd99b7f8aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name_player1: {fileID: 2089463916}
-  name_player2: {fileID: 1795679382}
+  name_player1: {fileID: 1074298232}
+  name_player2: {fileID: 679330487}
   player2Name: {fileID: 1143555386}
   multiplayerBorder: {fileID: 1662530061}
   singleBorder: {fileID: 1207702168}

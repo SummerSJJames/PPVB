@@ -12,8 +12,8 @@ public class MainMenuManager : MonoBehaviour
     GameManager gm;
     System.Diagnostics.Process _process;
 
-    [SerializeField] TMP_Text name_player1;
-    [SerializeField] TMP_Text name_player2;
+    [SerializeField] TMP_InputField name_player1;
+    [SerializeField] TMP_InputField name_player2;
 
     [SerializeField] GameObject player2Name;
     [SerializeField] GameObject multiplayerBorder;
@@ -59,14 +59,9 @@ public class MainMenuManager : MonoBehaviour
     public void Play()
     {
         TriggerKeyboard(false);
-        if (string.IsNullOrEmpty(name_player1.text))
-            name_player1.text = "Player 1";
-
-        if (string.IsNullOrEmpty(name_player2.text))
-            name_player2.text = "Player 2";
-
         GameManager.player1 = name_player1.text;
         GameManager.player2 = name_player2.text;
+
         SceneManager.LoadScene(1);
     }
 
