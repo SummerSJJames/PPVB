@@ -51,11 +51,6 @@ public class Player : MonoBehaviour
             timer = outsideTimeLimit;
             boundaryBubble.gameObject.SetActive(false);
         }
-
-        if (transform.position.y <= -5.5f)
-        {
-            transform.position = new Vector3(transform.position.x, 5.25f, 0) ;
-        }
     }
 
     public void Stun()
