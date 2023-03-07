@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
     [SerializeField] float groundDistance = 0.1f;
     [SerializeField] ParticleSystem stunParticles;
     bool jumping;
@@ -65,6 +65,14 @@ public class PlayerMovement : MonoBehaviour
     {
         var horizontal = Input.GetAxisRaw(horizontalAxisName);
         Vector3 scale = new Vector3(horizontal < 0 ? -1 : 1, 1, 1);
+        if (rb.gravityScale <= -1)
+        {
+            scale = new Vector3(-scale.x, scale.y, scale.z);
+            //If i want to invert controls
+            // horizontal = -horizontal;
+        }
+        // if (rb.gravityScale >= 1 || horizontal < 0) scale = new Vector3(-1, 1, 1);
+        // else if (rb.gravityScale >= 1 || horizontal < 0) scale = new Vector3(-1, 1, 1);
         graphics.transform.localScale = scale;
 
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
@@ -73,13 +81,14 @@ public class PlayerMovement : MonoBehaviour
     bool IsGrounded()
     {
         //Ray casting to see if either the left or right side of the player is close enough to the ground
-        var ground1 = Physics2D.Raycast(bottomLeft.position, Vector2.down, groundDistance);
-        var ground2 = Physics2D.Raycast(bottomRight.position, Vector2.down, groundDistance);
+        var ground1 = Physics2D.Raycast(bottomLeft.position, -transform.up, groundDistance);
+        var ground2 = Physics2D.Raycast(bottomRight.position, -transform.up, groundDistance);
         return ground1.collider && ground1.collider.gameObject.CompareTag("Ground") ||
                ground2.collider && ground2.collider.gameObject.CompareTag("Ground");
     }
 
-    void Jump() => rb.velocity = new Vector2(rb.velocity.x, jump);
+    // void Jump() => rb.velocity = new Vector2(rb.velocity.x, jump);
+    void Jump() => rb.AddRelativeForce(new Vector2(rb.velocity.x, jump), ForceMode2D.Impulse);
 
     public IEnumerator Stunned(float time)
     {
