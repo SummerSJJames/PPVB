@@ -8,11 +8,12 @@ using Random = UnityEngine.Random;
 public class TerrainGenerator : MonoBehaviour
 {
     bool generatingHole;
-    bool canGenerateHole = true;
+    [SerializeField] bool canGenerateHole = true;
     [SerializeField] Transform tile;
     [SerializeField] Transform obstacle;
     [SerializeField] float startPositionX;
     [SerializeField] float floorLevel;
+    [SerializeField] bool dontGenerateObstacles;
 
     [SerializeField] bool optionalSecondTerrain;
     [SerializeField] float optionalSecondaryFloorLevel;
@@ -25,7 +26,7 @@ public class TerrainGenerator : MonoBehaviour
             if (GameManager.instance.testing) return;
         #endif
         StartCoroutine(GenerateFloor());
-        StartCoroutine(SpawnObstacle());
+        if (!dontGenerateObstacles) StartCoroutine(SpawnObstacle());
     }
 
     IEnumerator GenerateFloor()
@@ -82,7 +83,7 @@ public class TerrainGenerator : MonoBehaviour
     IEnumerator TimeBeforeHole()
     {
         canGenerateHole = false;
-        yield return new WaitForSeconds(Random.Range(4f, 12f) / GameManager.instance.speed);
+        yield return new WaitForSeconds(Random.Range(1f, 6f) * GameManager.instance.speed);
         canGenerateHole = true;
     }
 
@@ -93,7 +94,7 @@ public class TerrainGenerator : MonoBehaviour
             if (!generatingHole)
             {
                 Instantiate(obstacle, new Vector2(startPositionX, floorLevel + 0.7f), quaternion.identity);
-                yield return new WaitForSeconds(Random.Range(5f, 12f) / GameManager.instance.speed);
+                yield return new WaitForSeconds(Random.Range(2f, 6f) * GameManager.instance.speed);
             }
             else yield return null;
         }

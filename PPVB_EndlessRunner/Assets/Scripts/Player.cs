@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
         boundaryBubble.gameObject.SetActive(false);
         countdown.text = "3";
-        GameManager.instance.speed = 1f;
     }
 
     void Update()

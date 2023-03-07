@@ -7,14 +7,17 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] GameObject[] multiplayerObjects;
-    [SerializeField] TMP_Text playerText;
     [SerializeField] Player[] players;
+
+    [SerializeField] TMP_Text playerText;
+    [SerializeField] TMP_Text scoreText;
     //[SerializeField] Vector3[] spawnPoints;
     GameManager gm;
 
     void Start()
     {
         gm = GameManager.instance;
+        gm.ResetValues();
 
         foreach (var obj in multiplayerObjects)
             obj.SetActive(gm.multiplayer);
@@ -24,6 +27,15 @@ public class PlayerManager : MonoBehaviour
 
         players[0].gameObject.SetActive(true);
         players[1].gameObject.SetActive(gm.multiplayer);
+        
+        scoreText.gameObject.SetActive(!gm.multiplayer);
+    }
+
+    void Update()
+    {
+        if (gm.multiplayer) return;
+
+        if (gm.gameRunning) scoreText.text = gm.score.ToString();
     }
 
     public void Lose(Player player)
@@ -32,7 +44,7 @@ public class PlayerManager : MonoBehaviour
         foreach (var p in players)
         {
             p.GetComponent<Player>().enabled = false;
-            if (p != player) playerText.text = playerText.text.Replace("[Player]", p.playerName);
+            if (p != player) playerText.text = playerText.text.Replace("[PLAYER]", p.playerName);
         }
 
         GameManager.instance.GameOver();

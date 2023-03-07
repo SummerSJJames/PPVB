@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 
@@ -19,9 +20,13 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject multiplayerBorder;
     [SerializeField] GameObject singleBorder;
 
+    public RectTransform leaderboard_ContentHolder;
     void Start()
     {
-        gm = FindObjectOfType<GameManager>();
+        gm = GameManager.instance;
+        gm.lb_Content = leaderboard_ContentHolder;
+        gm.ResetValues();
+        gm.SetupLeaderboard();
         SetBorder();
     }
 
