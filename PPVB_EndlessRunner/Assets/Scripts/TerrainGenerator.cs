@@ -17,16 +17,17 @@ public class TerrainGenerator : MonoBehaviour
 
     [SerializeField] bool optionalSecondTerrain;
     [SerializeField] float optionalSecondaryFloorLevel;
+    float obstacleDelay;
     Transform lastTile;
 
     void Start()
     {
         //Making sure the testing code only happens in editor
-        #if (UNITY_EDITOR)
-            if (GameManager.instance.testing) return;
-        #endif
+#if (UNITY_EDITOR)
+        if (GameManager.instance.testing) return;
+#endif
         StartCoroutine(GenerateFloor());
-        if (!dontGenerateObstacles) StartCoroutine(SpawnObstacle());
+        // if (!dontGenerateObstacles) StartCoroutine(SpawnObstacle());
     }
 
     IEnumerator GenerateFloor()
@@ -72,9 +73,12 @@ public class TerrainGenerator : MonoBehaviour
 
                 lastTile = SpawnTile(tile,
                     new Vector2(xpos, floorLevel), quaternion.identity);
+                if (!dontGenerateObstacles) SpawnObstacle();
             }
-            if (!lastTile) lastTile = SpawnTile(tile,
-                new Vector2(startPositionX, floorLevel), quaternion.identity);
+
+            if (!lastTile)
+                lastTile = SpawnTile(tile,
+                    new Vector2(startPositionX, floorLevel), quaternion.identity);
 
             yield return null;
         }
@@ -83,21 +87,19 @@ public class TerrainGenerator : MonoBehaviour
     IEnumerator TimeBeforeHole()
     {
         canGenerateHole = false;
-        yield return new WaitForSeconds(Random.Range(1f, 6f) * GameManager.instance.speed);
+        yield return new WaitForSeconds(Random.Range(1f, 6f) / GameManager.instance.speed);
         canGenerateHole = true;
     }
 
-    IEnumerator SpawnObstacle()
+    void SpawnObstacle()
     {
-        while (true)
+        if (obstacleDelay > 0)
         {
-            if (!generatingHole)
-            {
-                Instantiate(obstacle, new Vector2(startPositionX, floorLevel + 0.7f), quaternion.identity);
-                yield return new WaitForSeconds(Random.Range(2f, 6f) * GameManager.instance.speed);
-            }
-            else yield return null;
+            obstacleDelay -= Time.deltaTime;
+            return;
         }
+        Instantiate(obstacle, new Vector2(startPositionX, floorLevel + 0.7f), quaternion.identity);
+        obstacleDelay = Random.Range(2f, 6f) / GameManager.instance.speed;
     }
 
     Transform SpawnTile(Transform t, Vector2 pos, quaternion rot)

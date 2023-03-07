@@ -1899,8 +1899,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1538521310}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1811267495}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
         m_MethodName: SetMultiplayer
         m_Mode: 6
         m_Arguments:
@@ -2945,8 +2945,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1538521310}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1811267495}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
         m_MethodName: SetMultiplayer
         m_Mode: 6
         m_Arguments:
@@ -3076,17 +3076,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a87e84d0de591dc44b74db9ca28c6807, type: 3}
---- !u!114 &1538521310 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7746811527598910609, guid: a87e84d0de591dc44b74db9ca28c6807, type: 3}
-  m_PrefabInstance: {fileID: 1538521309}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdb0b5168f0e8604eb81766396f988dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1541301394
 GameObject:
   m_ObjectHideFlags: 0
@@ -4428,6 +4417,7 @@ MonoBehaviour:
   multiplayerBorder: {fileID: 1662530061}
   singleBorder: {fileID: 1207702168}
   leaderboard_ContentHolder: {fileID: 1453692579}
+  lb_Scroll: {fileID: 716318935}
 --- !u!1001 &1812178802
 PrefabInstance:
   m_ObjectHideFlags: 0

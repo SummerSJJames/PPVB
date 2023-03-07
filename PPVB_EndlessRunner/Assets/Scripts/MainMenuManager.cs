@@ -21,6 +21,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject singleBorder;
 
     public RectTransform leaderboard_ContentHolder;
+    [SerializeField] Scrollbar lb_Scroll;
+
     void Start()
     {
         gm = GameManager.instance;
@@ -32,6 +34,12 @@ public class MainMenuManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            lb_Scroll.value += 0.02f;
+        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            lb_Scroll.value -= 0.02f;
+        lb_Scroll.value = Mathf.Clamp(lb_Scroll.value, 0, 1);
+
         if (_process != null) return;
         if (Input.GetKeyDown("i"))
         {
@@ -47,6 +55,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void SetBorder()
     {
+        Debug.Log("Setting border");
         if (gm.multiplayer)
         {
             multiplayerBorder.SetActive(true);
@@ -59,6 +68,11 @@ public class MainMenuManager : MonoBehaviour
             singleBorder.SetActive(true);
             player2Name.SetActive(false);
         }
+    }
+
+    public void SetMultiplayer(bool b)
+    {
+        gm.SetMultiplayer(b);
     }
 
     public void Play()

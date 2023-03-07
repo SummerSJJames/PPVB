@@ -94,10 +94,12 @@ public class GameManager : MonoBehaviour
         }
         entries = entries.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
+        int count = 1;
         foreach (var kvp in entries)
         {
             var player = Instantiate(lb_PlayerEntryObject, lb_Content, false);
-            player.text = $"{kvp.Key}\nscore: {kvp.Value}";
+            player.text = $"{count}. {kvp.Key}\nscore: {kvp.Value}";
+            count++;
         }
 
         LayoutRebuilder.MarkLayoutForRebuild(lb_Content);
