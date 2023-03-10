@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public RectTransform lb_Content;
     [SerializeField] TMP_Text lb_PlayerEntryObject;
+    AudioSource music;
     Dictionary<string, float> entries;
 
     string scoreFile = "score.txt";
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
 
         filePath = Path.Combine(folderPath, scoreFile);
         entries = new Dictionary<string, float>();
+        music = GetComponent<AudioSource>();
     }
 
     void AddEntry(string player)
@@ -113,6 +115,7 @@ public class GameManager : MonoBehaviour
         speed = 1f;
         score = 0;
         timePlayed = 0;
+        music.pitch = 1f;
     }
 
     void Start()
@@ -132,6 +135,8 @@ public class GameManager : MonoBehaviour
         else timePlayed = float.MaxValue;
 
         if (speed < maxSpeed) speed += Time.deltaTime * 0.1f;
+        music.pitch = (3 / maxSpeed) * speed;
+        music.pitch = Mathf.Clamp(music.pitch, 1, 3);
 
         score = Mathf.RoundToInt(timePlayed * 10.75f);
     }
