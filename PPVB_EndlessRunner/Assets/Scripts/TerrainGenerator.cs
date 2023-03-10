@@ -17,7 +17,10 @@ public class TerrainGenerator : MonoBehaviour
 
     [SerializeField] bool optionalSecondTerrain;
     [SerializeField] float optionalSecondaryFloorLevel;
-    float obstacleDelay;
+    int obstacleDelay;
+    int objectDelay;
+    [SerializeField] GameObject[] objectsToSpawn;
+    [SerializeField] float objectsSpawnPosY;
     Transform lastTile;
 
     void Start()
@@ -26,9 +29,21 @@ public class TerrainGenerator : MonoBehaviour
 #if (UNITY_EDITOR)
         if (GameManager.instance.testing) return;
 #endif
+        obstacleDelay = Random.Range(0, 3);
+        objectDelay = Random.Range(0, 3);
         StartCoroutine(GenerateFloor());
         // if (!dontGenerateObstacles) StartCoroutine(SpawnObstacle());
     }
+
+    // void Update()
+    // {
+    //     if (obstacleDelay > 0)
+    //         obstacleDelay -= Time.deltaTime;
+    //
+    //     if (objectDelay > 0)
+    //         objectDelay -= Time.deltaTime;
+    // }
+
 
     IEnumerator GenerateFloor()
     {
@@ -42,13 +57,13 @@ public class TerrainGenerator : MonoBehaviour
             if (lastTile.position.x <= startPositionX - 0.45f)
             {
                 //If the random decides we want a gap in the terrain
-                float xpos = lastTile.position.x + 0.49f;
+                float xPos = lastTile.position.x + 0.49f;
                 if (canGenerateHole && Random.Range(0, randomOdds) == 0)
                 {
                     generatingHole = true;
                     int odds = 2;
                     float distance = 1.35f;
-                    xpos += 0.49f;
+                    xPos += 0.49f;
                     while (generatingHole)
                     {
                         //If the last tile has moved by the distance
@@ -60,7 +75,7 @@ public class TerrainGenerator : MonoBehaviour
                                 //We decrease the odds and increase the distance the block has to travel
                                 odds++;
                                 distance += 0.45f;
-                                xpos += 0.49f;
+                                xPos += 0.49f;
                             }
                             else generatingHole = false;
                         }
@@ -72,8 +87,15 @@ public class TerrainGenerator : MonoBehaviour
                 }
 
                 lastTile = SpawnTile(tile,
-                    new Vector2(xpos, floorLevel), quaternion.identity);
-                if (!dontGenerateObstacles) SpawnObstacle();
+                    new Vector2(xPos, floorLevel), quaternion.identity);
+                objectDelay--;
+                obstacleDelay--;
+                if (!dontGenerateObstacles)
+                {
+                    if (Random.Range(0, 2) == 0)
+                        SpawnObstacle(xPos);
+                    else SpawnObject(xPos);
+                }
             }
 
             if (!lastTile)
@@ -91,15 +113,28 @@ public class TerrainGenerator : MonoBehaviour
         canGenerateHole = true;
     }
 
-    void SpawnObstacle()
+    void SpawnObject(float x)
     {
-        if (obstacleDelay > 0)
-        {
-            obstacleDelay -= Time.deltaTime;
-            return;
-        }
-        Instantiate(obstacle, new Vector2(startPositionX, floorLevel + 0.7f), quaternion.identity);
-        obstacleDelay = Random.Range(2f, 6f) / GameManager.instance.speed;
+        if (objectDelay > 0) return;
+
+        // Instantiate(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)],
+        //     new Vector2(x, objectsSpawnPosY[Random.Range(0, objectsSpawnPosY.Length)]),
+        //     quaternion.identity);
+        var height = objectsSpawnPosY;
+        var spawnHeight = Random.Range(0, 2) == 0? height : -height;
+        var ob = Instantiate(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)], new Vector2(x, spawnHeight), quaternion.identity);
+        if (Math.Abs(spawnHeight - (-height)) < 0.1) ob.transform.Rotate(Vector3.forward, 180);
+        objectDelay = Random.Range(20, 60);
+    }
+
+    void SpawnObstacle(float x)
+    {
+        if (obstacleDelay > 0) return;
+        var height = floorLevel + 0.7f;
+        var spawnHeight = Random.Range(0, 2) == 0? height : -height;
+        var ob = Instantiate(obstacle, new Vector2(x, spawnHeight), quaternion.identity);
+        if (Math.Abs(spawnHeight - (-height)) < 0.1) ob.Rotate(Vector3.forward, 180);
+        obstacleDelay = Random.Range(10, 35);
     }
 
     Transform SpawnTile(Transform t, Vector2 pos, quaternion rot)

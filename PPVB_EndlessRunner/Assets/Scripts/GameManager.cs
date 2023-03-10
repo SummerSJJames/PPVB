@@ -60,8 +60,8 @@ public class GameManager : MonoBehaviour
         // if (!File.Exists(filePath))
         writer = File.AppendText(filePath);
 
-        //writer = File.(filePath);
-        writer.WriteLine($"{player}:{score}");
+        if (!String.IsNullOrWhiteSpace(player))
+            writer.WriteLine($"{player}:{score}");
         writer.Close();
     }
 
@@ -80,18 +80,19 @@ public class GameManager : MonoBehaviour
         {
             var line = reader.ReadLine();
             if (String.IsNullOrWhiteSpace(line)) continue;
-            
+
             string[] words = line.Split(':');
             if (words.Length != 2) continue;
 
             if (!float.TryParse(words[1], out var n)) continue;
-            
+
             if (!entries.ContainsKey(words[0]))
             {
                 entries.Add(words[0], n);
             }
             else if (n > entries[words[0]]) entries[words[0]] = n;
         }
+
         entries = entries.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
         int count = 1;
@@ -111,6 +112,7 @@ public class GameManager : MonoBehaviour
     {
         speed = 1f;
         score = 0;
+        timePlayed = 0;
     }
 
     void Start()

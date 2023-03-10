@@ -42,4 +42,10 @@ public class StunGrenade : Throwable
 
         Destroy(gameObject);
     }
+
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawRay(transform.position, direction);
+    // }
 }

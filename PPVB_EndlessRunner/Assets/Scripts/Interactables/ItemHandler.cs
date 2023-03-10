@@ -6,7 +6,7 @@ using UnityEngine;
 public class ItemHandler : MonoBehaviour
 {
     [HideInInspector] public Player player;
-    [HideInInspector] public Vector2 throwDirection; 
+    [HideInInspector] public Vector2 throwDirection;
     [SerializeField] float rotationSpeed = 1;
     [SerializeField] GameObject itemHolder;
     [SerializeField] string useItemBtn;
@@ -35,6 +35,8 @@ public class ItemHandler : MonoBehaviour
 
         if (Input.GetKeyDown(useItemBtn))
         {
+            heldItemTransform.parent = null;
+            heldItemTransform.gameObject.layer = 13;
             heldItem.Use();
             heldItem = null;
             heldItemTransform = null;
@@ -50,8 +52,16 @@ public class ItemHandler : MonoBehaviour
             heldItem = item;
             heldItemTransform = col.transform;
             heldItem.PickedUp(this);
-            
+            if (heldItemTransform.TryGetComponent<TileMovement>(out var m))
+                Destroy(m);
+
             //Destroy(col.gameObject);
         }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, throwDirection);
     }
 }

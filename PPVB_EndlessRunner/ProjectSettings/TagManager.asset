@@ -19,9 +19,9 @@ TagManager:
   - Interactable
   - UsedItem
   - GravityFlip
-  - 
-  - 
-  - 
+  - Bounds
+  - Item
+  - ThrownItem
   - 
   - 
   - 

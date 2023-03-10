@@ -11,17 +11,20 @@ public class Throwable : MonoBehaviour, I_Pickup
     [HideInInspector] public ItemHandler player;
 
     int groundLayer = 6;
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        //rb.gravityScale = 0;
     }
 
     public void PickedUp(ItemHandler p)
     {
         player = p;
         gameObject.layer = 9;
+        // rb.gravityScale = player.GetComponent<Rigidbody2D>().gravityScale;
+        //rb.gravityScale = 1;
     }
 
     public virtual void Use()
@@ -44,7 +47,7 @@ public class Throwable : MonoBehaviour, I_Pickup
         
     }
 
-    protected virtual void OnCollisionEnter2D(Collision2D col)
+    protected virtual void OnTriggerEnter2D(Collider2D col)
     {
         if (!player || player.heldItem == this) return;
 
