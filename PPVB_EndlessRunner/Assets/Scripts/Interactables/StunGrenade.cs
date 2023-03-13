@@ -18,12 +18,6 @@ public class StunGrenade : Throwable
         Explode();
     }
 
-    void Update()
-    {
-        if (!player) return;
-        direction = player.throwDirection;
-    }
-
     private void Explode()
     {
         Instantiate(explosion, transform.position, quaternion.identity);
