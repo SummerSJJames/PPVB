@@ -18,6 +18,12 @@ public class StunGrenade : Throwable
         Explode();
     }
 
+    void Update()
+    {
+        if (!player) return;
+        direction = player.throwDirection;
+    }
+
     private void Explode()
     {
         Instantiate(explosion, transform.position, quaternion.identity);
@@ -43,9 +49,9 @@ public class StunGrenade : Throwable
         Destroy(gameObject);
     }
 
-    // void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawRay(transform.position, direction);
-    // }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(transform.position, direction);
+    }
 }

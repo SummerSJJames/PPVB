@@ -30,7 +30,7 @@ public class ItemHandler : MonoBehaviour
 
         heldItemTransform.position = itemHolder.transform.position;
         arrow.Rotate(-Vector3.forward, rotationSpeed * (Time.deltaTime * 10));
-        throwDirection = transform.TransformDirection(arrow.up);
+        throwDirection = arrow.up;
         // Debug.Log(arrow.up);
 
         if (Input.GetKeyDown(useItemBtn))

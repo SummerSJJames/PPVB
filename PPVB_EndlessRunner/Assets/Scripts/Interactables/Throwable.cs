@@ -10,7 +10,6 @@ public class Throwable : MonoBehaviour, I_Pickup
     [HideInInspector] public Vector2 direction;
     [HideInInspector] public ItemHandler player;
 
-    int groundLayer = 6;
     public Rigidbody2D rb;
 
     void Start()
@@ -36,7 +35,7 @@ public class Throwable : MonoBehaviour, I_Pickup
 
     protected virtual IEnumerator Move()
     {
-        rb.AddRelativeForce(direction * throwForce, ForceMode2D.Impulse);
+        rb.AddForce(direction * throwForce, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(5f);
         Landed();
