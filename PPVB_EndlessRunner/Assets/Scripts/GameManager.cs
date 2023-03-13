@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
             if (instance != this) Destroy(gameObject);
         }
         else instance = this;
+        
+        PlayerPrefs.SetFloat("Volume", 0.5f);
 
         gameRunning = true;
         DontDestroyOnLoad(gameObject);

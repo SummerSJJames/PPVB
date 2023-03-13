@@ -16,6 +16,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] TMP_InputField name_player1;
     [SerializeField] TMP_InputField name_player2;
 
+    [SerializeField] Slider volumeSlider;
+
     [SerializeField] GameObject player2Name;
     [SerializeField] GameObject multiplayerBorder;
     [SerializeField] GameObject singleBorder;
@@ -30,6 +32,9 @@ public class MainMenuManager : MonoBehaviour
         gm.ResetValues();
         gm.SetupLeaderboard();
         SetBorder();
+
+        volumeSlider.value = PlayerPrefs.GetFloat("Volume");
+        AudioListener.volume = PlayerPrefs.GetFloat("Volume");
     }
 
     void Update()
@@ -41,16 +46,22 @@ public class MainMenuManager : MonoBehaviour
         lb_Scroll.value = Mathf.Clamp(lb_Scroll.value, 0, 1);
 
         if (_process != null) return;
-        if (Input.GetKeyDown("i"))
+        if (Input.GetKeyDown("o"))
         {
             gm.SetMultiplayer(false);
             SetBorder();
         }
-        else if (Input.GetKeyDown("o"))
+        else if (Input.GetKeyDown("i"))
         {
             gm.SetMultiplayer(true);
             SetBorder();
         }
+    }
+
+    public void SliderChanged()
+    {
+        PlayerPrefs.SetFloat("Volume", volumeSlider.value);
+        AudioListener.volume = PlayerPrefs.GetFloat("Volume");
     }
 
     public void SetBorder()
@@ -80,6 +91,7 @@ public class MainMenuManager : MonoBehaviour
         TriggerKeyboard(false);
         GameManager.player1 = name_player1.text;
         GameManager.player2 = name_player2.text;
+        PlayerPrefs.SetFloat("Volume", volumeSlider.value);
 
         SceneManager.LoadScene(1);
     }

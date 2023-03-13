@@ -29,6 +29,8 @@ public class PlayerManager : MonoBehaviour
         players[1].gameObject.SetActive(gm.multiplayer);
         
         scoreText.gameObject.SetActive(!gm.multiplayer);
+        
+        AudioListener.volume = PlayerPrefs.GetFloat("Volume");
     }
 
     void Update()
