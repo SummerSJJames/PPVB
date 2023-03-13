@@ -10,7 +10,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float groundDistance = 0.1f;
     [SerializeField] ParticleSystem stunParticles;
     [SerializeField] ParticleSystem slowParticles;
+    [SerializeField] float strength = 8f;
     bool jumping;
+    bool stunned;
 
     [SerializeField] float moveSpeed = 1;
     float speed;
@@ -60,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
             animator.SetTrigger("Fall");
             dust.SetTrigger("Fall");
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(new Vector2(-1,1) * 10f ,ForceMode2D.Impulse);
+        }
     }
 
     void MovePlayer()
@@ -76,7 +83,11 @@ public class PlayerMovement : MonoBehaviour
         // else if (rb.gravityScale >= 1 || horizontal < 0) scale = new Vector3(-1, 1, 1);
         graphics.transform.localScale = scale;
 
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+        Vector2 targetVelocity = new Vector2(horizontal * speed, rb.velocity.y);
+        Vector2 currentVelocity = rb.velocity;
+        rb.AddForce((targetVelocity - currentVelocity) * strength);
+        
+        //rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
     bool IsGrounded()
@@ -94,10 +105,12 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator Stunned(float time)
     {
         Debug.Log("Stun");
+        stunned = true;
         speed = moveSpeed / 2;
         jump = jumpForce / 2;
         stunParticles.Play();
         yield return new WaitForSeconds(time / GameManager.instance.speed);
+        stunned = false;
         speed = moveSpeed;
         jump = jumpForce;
         stunParticles.Stop();
@@ -112,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
             jump = jumpForce / 2.5f;
             slowParticles.Play();
         }
-        else if (col.gameObject.layer == 6)
+        else if (!stunned && col.gameObject.layer == 6)
         {
             speed = moveSpeed;
             jump = jumpForce;

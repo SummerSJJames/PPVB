@@ -35,7 +35,7 @@ public class StunGrenade : Throwable
             var multiplier = explosionForce / dir.magnitude;
             multiplier = Mathf.Clamp(multiplier, 1f, explosionForce);
             p.GetComponent<Rigidbody2D>()
-                .AddRelativeForce((p.transform.position - transform.position).normalized * multiplier,
+                .AddForce(dir.normalized * multiplier,
                     ForceMode2D.Impulse);
             p.Stun();
         }
