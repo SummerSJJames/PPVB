@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     [SerializeField] float groundDistance = 0.1f;
     [SerializeField] ParticleSystem stunParticles;
+    [SerializeField] ParticleSystem slowParticles;
     bool jumping;
 
     [SerializeField] float moveSpeed = 1;
@@ -101,5 +102,21 @@ public class PlayerMovement : MonoBehaviour
         jump = jumpForce;
         stunParticles.Stop();
         Debug.Log("Finished stun");
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.layer == 14)
+        {
+            speed = moveSpeed / 3;
+            jump = jumpForce / 2.5f;
+            slowParticles.Play();
+        }
+        else if (col.gameObject.layer == 6)
+        {
+            speed = moveSpeed;
+            jump = jumpForce;
+            slowParticles.Stop();
+        }
     }
 }
