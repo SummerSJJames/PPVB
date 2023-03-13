@@ -26,7 +26,7 @@ public class ItemHandler : MonoBehaviour
     {
         arrow.gameObject.SetActive(heldItem != null);
         itemHolder.SetActive(heldItem != null);
-        if (heldItem == null) return;
+        if (heldItem == null || heldItemTransform == null) return;
 
         heldItemTransform.position = itemHolder.transform.position;
         arrow.Rotate(-Vector3.forward, rotationSpeed * (Time.deltaTime * 10));

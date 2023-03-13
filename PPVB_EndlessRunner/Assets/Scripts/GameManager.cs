@@ -135,8 +135,8 @@ public class GameManager : MonoBehaviour
         else timePlayed = float.MaxValue;
 
         if (speed < maxSpeed) speed += Time.deltaTime * 0.1f;
-        music.pitch = (3 / maxSpeed) * speed;
-        music.pitch = Mathf.Clamp(music.pitch, 1, 3);
+        music.pitch = (2.5f / maxSpeed) * speed;
+        music.pitch = Mathf.Clamp(music.pitch, 0.5f, 3);
 
         score = Mathf.RoundToInt(timePlayed * 10.75f);
     }
@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         FindObjectOfType<GameOverManager>().GameOver(multiplayer);
-        AddEntry(player1);
+        if (!multiplayer) AddEntry(player1);
         gameRunning = false;
     }
 }
