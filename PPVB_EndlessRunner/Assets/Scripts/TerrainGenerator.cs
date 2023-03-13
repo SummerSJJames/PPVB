@@ -115,12 +115,17 @@ public class TerrainGenerator : MonoBehaviour
         //     quaternion.identity);
         var height = objectsSpawnPosY;
         var spawnHeight = Random.Range(0, 2) == 0 ? height : -height;
-        var ob = Instantiate(
-            gm.multiplayer
-                ? multiplayerObjectsToSpawn[Random.Range(0, multiplayerObjectsToSpawn.Length)]
-                : singleplayerObjectsToSpawn[Random.Range(0, singleplayerObjectsToSpawn.Length)],
-            new Vector2(x, spawnHeight), quaternion.identity);
-        if (Math.Abs(spawnHeight - (-height)) < 0.1) ob.transform.Rotate(Vector3.forward, 180);
+        var obj = gm.multiplayer
+            ? multiplayerObjectsToSpawn[Random.Range(0, multiplayerObjectsToSpawn.Length)]
+            : singleplayerObjectsToSpawn[Random.Range(0, singleplayerObjectsToSpawn.Length)];
+        var ob = Instantiate(obj, new Vector2(x, spawnHeight), quaternion.identity);
+        if (Math.Abs(spawnHeight - (-height)) < 0.1)
+        {
+            ob.transform.Rotate(Vector3.forward, 180);
+            if (ob.CompareTag("Log") && ob.TryGetComponent<Rigidbody2D>(out var rigid))
+                rigid.gravityScale = -1;
+        }
+
         objectDelay = Random.Range(20, 60);
     }
 

@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: -993847685959110216}
   m_Layer: 7
   m_Name: Log
-  m_TagString: Obstacle
+  m_TagString: Log
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockbackForce: 25
-  speed: 2
+  speed: 4
 --- !u!50 &6638485725254224638
 Rigidbody2D:
   serializedVersion: 4

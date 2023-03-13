@@ -39,11 +39,14 @@ public class MainMenuManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-            lb_Scroll.value += 0.02f;
-        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-            lb_Scroll.value -= 0.02f;
-        lb_Scroll.value = Mathf.Clamp(lb_Scroll.value, 0, 1);
+        if (lb_Scroll.gameObject.activeInHierarchy)
+        {
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+                lb_Scroll.value += 0.02f;
+            else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+                lb_Scroll.value -= 0.02f;
+            lb_Scroll.value = Mathf.Clamp(lb_Scroll.value, 0, 1);
+        }
 
         if (_process != null) return;
         if (Input.GetKeyDown("o"))
