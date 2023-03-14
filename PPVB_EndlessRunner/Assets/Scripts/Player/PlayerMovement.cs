@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     //Making these editable variables so they can be changed per player
     [SerializeField] string horizontalAxisName = "Horizontal";
     [SerializeField] string jumpButton = "w";
-    
+
     [SerializeField] float jumpForce = 1;
     float jump;
     [SerializeField] Transform bottomLeft;
@@ -30,6 +30,25 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Animator dust;
 
     [SerializeField] GameObject graphics;
+
+    void OnEnable()
+    {
+        RandomEventsManager.ChooseEvent += RandomEvent;
+    }
+
+    void OnDisable()
+    {
+        RandomEventsManager.ChooseEvent -= RandomEvent;
+    }
+
+    void RandomEvent(randomEvent e)
+    {
+        if (e != randomEvent.flip) return;
+        Debug.Log("Flip");
+        rb.gravityScale = rb.gravityScale >= 1 ? -1 : 1;
+        transform.Rotate(Vector3.forward, 180);
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if (!GameManager.instance.gameRunning) return;
-        
+
         MovePlayer();
 
         if (IsGrounded())
@@ -74,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
             //If i want to invert controls
             // horizontal = -horizontal;
         }
+
         // if (rb.gravityScale >= 1 || horizontal < 0) scale = new Vector3(-1, 1, 1);
         // else if (rb.gravityScale >= 1 || horizontal < 0) scale = new Vector3(-1, 1, 1);
         graphics.transform.localScale = scale;
@@ -81,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 targetVelocity = new Vector2(horizontal * speed, rb.velocity.y);
         Vector2 currentVelocity = rb.velocity;
         rb.AddForce((targetVelocity - currentVelocity) * strength);
-        
+
         //rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
@@ -125,6 +145,15 @@ public class PlayerMovement : MonoBehaviour
             speed = moveSpeed;
             jump = jumpForce;
             slowParticles.Stop();
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.layer == 10)
+        {
+            rb.gravityScale = rb.gravityScale >= 1 ? -1 : 1;
+            transform.Rotate(Vector3.forward, 180);
         }
     }
 }

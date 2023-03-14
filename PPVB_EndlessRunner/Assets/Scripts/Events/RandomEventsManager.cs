@@ -7,6 +7,13 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+public enum randomEvent
+{
+    flip,
+    explosion,
+    rain
+};
+
 public class RandomEventsManager : MonoBehaviour
 {
     [SerializeField] AudioSource three;
@@ -24,22 +31,51 @@ public class RandomEventsManager : MonoBehaviour
 
     GameManager gm;
 
+    public delegate void OnChooseEvent(randomEvent e);
+
+    public static OnChooseEvent ChooseEvent;
+
     void Start()
     {
         gm = GameManager.instance;
         TimeBeforeEvent = 5;
+        ChooseEvent += PickEvent;
+    }
+
+    void PickEvent(randomEvent e)
+    {
+        
     }
 
     void Update()
     {
         if (playing) return;
 
+        if (!gm.gameRunning)
+        {
+            modeText.gameObject.SetActive(false);
+            StopAllCoroutines();
+            return;
+        }
+
         if (TimeBeforeEvent > 0)
             TimeBeforeEvent -= Time.deltaTime;
-        else StartCoroutine(CountDown());
+        else
+        {
+            var ev = Random.Range(0, 3) switch
+            {
+                0 => randomEvent.flip,
+                1 => randomEvent.explosion,
+                2 => randomEvent.rain,
+                _ => randomEvent.flip
+            };
+            StartCoroutine(CountDown(ev));
+        }
     }
+    
+    
 
-    IEnumerator CountDown()
+    IEnumerator CountDown(randomEvent e)
     {
         playing = true;
         countdown.SetTrigger("Play");
@@ -49,22 +85,24 @@ public class RandomEventsManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         one.Play();
         yield return new WaitForSeconds(1);
-        switch (Random.Range(0, 3))
+        switch (e)
         {
-            case 0:
+            case randomEvent.flip:
                 flip.Play();
                 modeText.text = "FLIP";
                 break;
-            case 1:
+            case randomEvent.explosion:
                 explosion.Play();
                 modeText.text = "EXPLOSION";
                 break;
-            case 2:
+            case randomEvent.rain:
                 rain.Play();
                 modeText.text = "RAIN";
                 break;
+            default:
+                break;
         }
-
+        ChooseEvent?.Invoke(e);
         TimeBeforeEvent = 3f;
         playing = false;
     }
