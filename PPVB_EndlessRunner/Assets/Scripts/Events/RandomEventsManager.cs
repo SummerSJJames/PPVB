@@ -24,6 +24,7 @@ public class RandomEventsManager : MonoBehaviour
     [SerializeField] AudioSource rain;
 
     [SerializeField] TMP_Text modeText;
+    [SerializeField] GameObject countDownText;
     [SerializeField] Animator countdown;
 
     float TimeBeforeEvent;
@@ -44,19 +45,17 @@ public class RandomEventsManager : MonoBehaviour
 
     void PickEvent(randomEvent e)
     {
-        
     }
 
     void Update()
     {
-        if (playing) return;
-
         if (!gm.gameRunning)
         {
-            modeText.gameObject.SetActive(false);
+            countDownText.SetActive(false);
             StopAllCoroutines();
             return;
         }
+        if (playing) return;
 
         if (TimeBeforeEvent > 0)
             TimeBeforeEvent -= Time.deltaTime;
@@ -72,8 +71,7 @@ public class RandomEventsManager : MonoBehaviour
             StartCoroutine(CountDown(ev));
         }
     }
-    
-    
+
 
     IEnumerator CountDown(randomEvent e)
     {
@@ -103,7 +101,8 @@ public class RandomEventsManager : MonoBehaviour
                 break;
         }
         ChooseEvent?.Invoke(e);
-        TimeBeforeEvent = 3f;
+        yield return new WaitForSeconds(1.25f);
+        TimeBeforeEvent = 15 / gm.speed;
         playing = false;
     }
 }
