@@ -62,11 +62,6 @@ public class PlayerMovement : MonoBehaviour
             animator.SetTrigger("Fall");
             dust.SetTrigger("Fall");
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(new Vector2(-1,1) * 10f ,ForceMode2D.Impulse);
-        }
     }
 
     void MovePlayer()

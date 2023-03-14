@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
 
         if (!String.IsNullOrWhiteSpace(player))
             writer.WriteLine($"{player}:{score}");
+        else writer.WriteLine($"Player1:{score}");
         writer.Close();
     }
 
