@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         }
         else instance = this;
         
-        PlayerPrefs.SetFloat("Volume", 0.5f);
+        // PlayerPrefs.SetFloat("Volume", 0.5f);
 
         gameRunning = true;
         DontDestroyOnLoad(gameObject);

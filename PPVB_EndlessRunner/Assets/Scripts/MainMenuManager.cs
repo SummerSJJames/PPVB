@@ -32,9 +32,10 @@ public class MainMenuManager : MonoBehaviour
         gm.ResetValues();
         gm.SetupLeaderboard();
         SetBorder();
+        var volume = PlayerPrefs.GetFloat("Volume") <= 0 ? 0.5f : PlayerPrefs.GetFloat("Volume");
 
-        volumeSlider.value = PlayerPrefs.GetFloat("Volume");
-        AudioListener.volume = PlayerPrefs.GetFloat("Volume");
+        volumeSlider.value = volume;
+        AudioListener.volume = volume;
     }
 
     void Update()
