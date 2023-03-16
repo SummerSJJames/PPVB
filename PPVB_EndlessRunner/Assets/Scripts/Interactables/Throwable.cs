@@ -45,7 +45,7 @@ public class Throwable : MonoBehaviour, I_Pickup
 
     protected virtual void OnTriggerEnter2D(Collider2D col)
     {
-        if (!player || player.heldItem == this) return;
+        if (!player || player.heldItem == this || col.gameObject == player.gameObject) return;
 
         Landed();
     }
