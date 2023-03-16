@@ -17,17 +17,17 @@ public class StickyBomb : Throwable
         hasLanded = true;
         Explode();
     }
-//6
+
     private void Explode()
     {
         Instantiate(explosion, transform.position, quaternion.identity);
         List<GameObject> tiles = new List<GameObject>();
-        //Get every player in the blast radius
+        //Get every tile in the blast radius
         Array.ForEach(Physics2D.OverlapCircleAll(transform.position, blastRadius), x =>
         {
             if (x.gameObject.layer == 6) tiles.Add(x.gameObject);
         });
-        //Stun every player and knock them back
+        //Replace the tiles with sticky tiles
         foreach (var t in tiles)
         {
             Instantiate(stickyTile, t.transform.position, quaternion.identity);

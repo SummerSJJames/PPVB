@@ -61,6 +61,7 @@ public class RandomEventsManager : MonoBehaviour
             TimeBeforeEvent -= Time.deltaTime;
         else
         {
+            //Randomly choosing an event
             var ev = Random.Range(0, 3) switch
             {
                 0 => randomEvent.flip,
@@ -75,6 +76,7 @@ public class RandomEventsManager : MonoBehaviour
 
     IEnumerator CountDown(randomEvent e)
     {
+        //Playing the right audio and counting down then calling the events
         playing = true;
         countdown.SetTrigger("Play");
         three.Play();

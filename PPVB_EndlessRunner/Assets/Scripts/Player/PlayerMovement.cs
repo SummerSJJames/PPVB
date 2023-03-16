@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (e != randomEvent.flip) return;
         Debug.Log("Flip");
-        rb.gravityScale = rb.gravityScale >= 1 ? -1 : 1;
+        rb.gravityScale = -rb.gravityScale;
         transform.Rotate(Vector3.forward, 180);
     }
 
@@ -137,12 +137,14 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        //If on a sticky tile
         if (col.gameObject.layer == 14)
         {
             speed = moveSpeed / 1.5f;
             jump = jumpForce / 2.5f;
             slowParticles.Play();
         }
+        //When on a normal tile
         else if (!stunned && col.gameObject.layer == 6)
         {
             speed = moveSpeed;
@@ -155,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.layer == 10)
         {
-            rb.gravityScale = rb.gravityScale >= 1 ? -1 : 1;
+            rb.gravityScale = -rb.gravityScale;
             transform.Rotate(Vector3.forward, 180);
         }
     }

@@ -15,6 +15,7 @@ public class TileMovement : MonoBehaviour
             if (GameManager.instance.testing) return;
         #endif
         speed = GameManager.instance.speed;
+        //Continuously moving the tile left scaling speed with game speed 
         transform.position += direction * (speed * Time.deltaTime);
     }
 

@@ -22,6 +22,7 @@ public class PlayerManager : MonoBehaviour
         foreach (var obj in multiplayerObjects)
             obj.SetActive(gm.multiplayer);
 
+        //Default names
         if (!string.IsNullOrWhiteSpace(GameManager.player1)) players[0].playerName = GameManager.player1;
         if (!string.IsNullOrWhiteSpace(GameManager.player2)) players[1].playerName = GameManager.player2;
 

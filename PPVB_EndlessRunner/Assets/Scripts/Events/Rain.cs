@@ -42,7 +42,7 @@ public class Rain : MonoBehaviour
         playing = true;
         while (currentEvent == randomEvent.rain)
         {
-            Debug.Log("Raining");
+            //Spawning rain in a random position
             Instantiate(drop, new Vector2(Random.Range(leftOfScreen, rightOfScreen), 5.5f), quaternion.identity);
             yield return new WaitForSeconds(Random.Range(0.2f, 0.35f) / GameManager.instance.speed);
         }

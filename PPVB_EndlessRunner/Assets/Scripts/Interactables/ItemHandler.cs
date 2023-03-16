@@ -51,6 +51,7 @@ public class ItemHandler : MonoBehaviour
         {
             heldItem = item;
             heldItemTransform = col.transform;
+            //Calling the item for pick up
             heldItem.PickedUp(this);
             if (heldItemTransform.TryGetComponent<TileMovement>(out var m))
                 Destroy(m);

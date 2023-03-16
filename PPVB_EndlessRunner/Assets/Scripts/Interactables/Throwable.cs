@@ -15,21 +15,18 @@ public class Throwable : MonoBehaviour, I_Pickup
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        //rb.gravityScale = 0;
     }
 
     public void PickedUp(ItemHandler p)
     {
         player = p;
         gameObject.layer = 9;
-        // rb.gravityScale = player.GetComponent<Rigidbody2D>().gravityScale;
-        //rb.gravityScale = 1;
     }
 
     public virtual void Use()
     {
         direction = player.throwDirection;
-        //Debug.Log(direction);
+        
         StartCoroutine(Move());
     }
 

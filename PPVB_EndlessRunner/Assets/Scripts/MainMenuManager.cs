@@ -32,6 +32,7 @@ public class MainMenuManager : MonoBehaviour
         gm.ResetValues();
         gm.SetupLeaderboard();
         SetBorder();
+        //Checking if the player pref exists otherwise setting a default value
         var volume = PlayerPrefs.GetFloat("Volume") <= 0 ? 0.5f : PlayerPrefs.GetFloat("Volume");
 
         volumeSlider.value = volume;
@@ -42,6 +43,7 @@ public class MainMenuManager : MonoBehaviour
     {
         if (lb_Scroll.gameObject.activeInHierarchy)
         {
+            //Changing the scroll value so we can scroll with the joysticks
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
                 lb_Scroll.value += 0.02f;
             else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
@@ -107,10 +109,12 @@ public class MainMenuManager : MonoBehaviour
 
     public void TriggerKeyboard(bool visible)
     {
+        //If the on screen keyboard isnt active yet we activate it
         if (visible && _process == null)
             _process = System.Diagnostics.Process.Start("osk.exe");
         else if (_process != null)
         {
+            //Checking to see if it has not already been exited manually
             if (!_process.HasExited)
                 _process.Kill();
             _process = null;

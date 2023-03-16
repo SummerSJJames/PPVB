@@ -12,7 +12,9 @@ public class GravityFlip : MonoBehaviour
 
         var player = col.gameObject.GetComponent<PlayerMovement>();
         
-        player.rb.gravityScale = player.rb.gravityScale >= 1 ? -1 : 1;
+        //Invert the players current gravity scale
+        player.rb.gravityScale = -player.rb.gravityScale;
+
         player.transform.Rotate(Vector3.forward, 180);
     }
 }

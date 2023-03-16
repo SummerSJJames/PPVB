@@ -24,8 +24,10 @@ public class KnockbackTree : MonoBehaviour
     {
         if (collision.gameObject.layer != 3) return;
         Debug.Log("Knock back Player!");
+        //Get the direction the player is from the log
         dir = (collision.gameObject.transform.position - transform.position).normalized;
-        collision.rigidbody.AddRelativeForce(new Vector2(dir.x * knockbackForce, dir.y * knockbackForce / 5),
+        //Give player force in that direction, reduced force on the y as the force is much stronger there
+        collision.rigidbody.AddRelativeForce(new Vector2(dir.x * knockbackForce, dir.y * knockbackForce / 6),
             ForceMode2D.Impulse);
     }
 

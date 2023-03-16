@@ -32,12 +32,14 @@ public class Player : MonoBehaviour
     {
         outsideBounds = !sRenderer.isVisible;
 
+        //Check if player is outside the bounds and count down
         if (outsideBounds)
         {
             boundaryBubble.gameObject.SetActive(true);
             boundaryBubble.position = new Vector3(-8, transform.position.y, 0);
             timer -= Time.deltaTime;
 
+            //When countdown is complete call that the player loses
             if (timer <= 0)
             {
                 //Destroy(gameObject);

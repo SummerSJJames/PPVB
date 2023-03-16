@@ -19,7 +19,7 @@ public class RainDrop : MonoBehaviour
         collider = GetComponent<Collider2D>();
         collider.enabled = false;
 
-        //yPos = Random.Range(0, 2) == 0 ? 0.5f : -3.5f;
+        //Making it randomly choose a y position to activate its collider at so it can make all the layers sticky
 
         yPos = Random.Range(0, 3) switch
         {
@@ -34,6 +34,7 @@ public class RainDrop : MonoBehaviour
 
     void Update()
     {
+        //Moving it down
         transform.position += -(Vector3.up * (gm.speed * speedDivider * Time.deltaTime));
 
         if (transform.position.y <= yPos) collider.enabled = true;
@@ -42,7 +43,7 @@ public class RainDrop : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.layer != 6) return;
-
+        //Spawning a sticky tile when it detects it has collided with a tile
         Instantiate(stickyTile, col.transform.position, quaternion.identity);
         Destroy(col.gameObject);
         Destroy(gameObject);
@@ -51,6 +52,7 @@ public class RainDrop : MonoBehaviour
     IEnumerator Kill()
     {
         yield return new WaitForSeconds(5f);
+        //Auto destroy in case no collision is detected
         Destroy(gameObject);
     }
 }

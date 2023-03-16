@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
         // if (!File.Exists(filePath))
         writer = File.AppendText(filePath);
 
+        //Checking if player name is valid otherwise doing default
         if (!String.IsNullOrWhiteSpace(player))
             writer.WriteLine($"{player}:{score}");
         else writer.WriteLine($"Player1:{score}");
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviour
 
         var reader = File.OpenText(filePath);
 
+        //Getting count of all lines
         int linesCount = File.ReadAllLines(filePath).Length;
         string[] leaderboardEntries = new string[linesCount];
 
@@ -86,15 +88,18 @@ public class GameManager : MonoBehaviour
             var line = reader.ReadLine();
             if (String.IsNullOrWhiteSpace(line)) continue;
 
+            //Splitting to get the name and score
             string[] words = line.Split(':');
             if (words.Length != 2) continue;
 
             if (!float.TryParse(words[1], out var n)) continue;
 
+            //Checking to see if our dictionary already contains the player name
             if (!entries.ContainsKey(words[0]))
             {
                 entries.Add(words[0], n);
             }
+            //If it does, we check if the current score is higher
             else if (n > entries[words[0]]) entries[words[0]] = n;
         }
 
@@ -103,6 +108,7 @@ public class GameManager : MonoBehaviour
         int count = 1;
         foreach (var kvp in entries)
         {
+            //Adding an entry object to our content holder
             var player = Instantiate(lb_PlayerEntryObject, lb_Content, false);
             player.text = $"{count}. {kvp.Key}\nscore: {kvp.Value}";
             count++;
@@ -134,6 +140,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (SceneManager.GetActiveScene().buildIndex == 0) return;
+        
+        //Increasing the speed and time played
         if (timePlayed < float.MaxValue) timePlayed += Time.deltaTime;
         else timePlayed = float.MaxValue;
 

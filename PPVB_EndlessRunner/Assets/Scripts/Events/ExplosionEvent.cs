@@ -44,11 +44,12 @@ public class ExplosionEvent : MonoBehaviour
         playing = true;
         while (currentEvent == randomEvent.explosion)
         {
+            //Spawning explosions in a random position;
             var pos = new Vector2(Random.Range(leftOfScreen.x, rightOfScreen.x),
                 Random.Range(leftOfScreen.y, rightOfScreen.y));
             var ind = Instantiate(indicator, pos, quaternion.identity);
             yield return new WaitForSeconds(1.75f / GameManager.instance.speed);
-            Debug.Log("Exploding");
+
             var exp = Instantiate(explosion, pos, quaternion.identity);
             Destroy(ind);
             

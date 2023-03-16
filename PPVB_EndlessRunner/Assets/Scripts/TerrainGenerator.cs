@@ -113,12 +113,17 @@ public class TerrainGenerator : MonoBehaviour
         // Instantiate(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)],
         //     new Vector2(x, objectsSpawnPosY[Random.Range(0, objectsSpawnPosY.Length)]),
         //     quaternion.identity);
+        
+        //Randomly determining whether we want the obstacle to spawn on the roof or ground
         var height = objectsSpawnPosY;
         var spawnHeight = Random.Range(0, 2) == 0 ? height : -height;
+        //Determining which object to spawn based on multiplayer or not
         var obj = gm.multiplayer
             ? multiplayerObjectsToSpawn[Random.Range(0, multiplayerObjectsToSpawn.Length)]
             : singleplayerObjectsToSpawn[Random.Range(0, singleplayerObjectsToSpawn.Length)];
+        //Spawning it
         var ob = Instantiate(obj, new Vector2(x, spawnHeight), quaternion.identity);
+        //To invert log gravity
         if (Math.Abs(spawnHeight - (-height)) < 0.1)
         {
             ob.transform.Rotate(Vector3.forward, 180);
@@ -133,7 +138,9 @@ public class TerrainGenerator : MonoBehaviour
     {
         if (obstacleDelay > 0) return;
         var height = floorLevel + 0.7f;
+        //Determining whether we want it to spawn on the roof or floor
         var spawnHeight = Random.Range(0, 2) == 0 ? height : -height;
+        //Spawning obstacle
         var ob = Instantiate(obstacle, new Vector2(x, spawnHeight), quaternion.identity);
         if (Math.Abs(spawnHeight - (-height)) < 0.1) ob.Rotate(Vector3.forward, 180);
         obstacleDelay = Random.Range(10, 35);
