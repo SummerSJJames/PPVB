@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce = 1;
     float jump;
     [SerializeField] Transform bottomLeft;
+    [SerializeField] Transform bottomMiddle;
     [SerializeField] Transform bottomRight;
 
     [SerializeField] Animator animator;
@@ -110,8 +111,10 @@ public class PlayerMovement : MonoBehaviour
         //Ray casting to see if either the left or right side of the player is close enough to the ground
         var ground1 = Physics2D.Raycast(bottomLeft.position, -transform.up, groundDistance);
         var ground2 = Physics2D.Raycast(bottomRight.position, -transform.up, groundDistance);
+        var ground3 = Physics2D.Raycast(bottomMiddle.position, -transform.up, groundDistance);
         return ground1.collider && ground1.collider.gameObject.CompareTag("Ground") ||
-               ground2.collider && ground2.collider.gameObject.CompareTag("Ground");
+               ground2.collider && ground2.collider.gameObject.CompareTag("Ground") ||
+               ground3.collider && ground3.collider.gameObject.CompareTag("Ground");
     }
 
     // void Jump() => rb.velocity = new Vector2(rb.velocity.x, jump);
@@ -136,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.layer == 14)
         {
-            speed = moveSpeed / 3;
+            speed = moveSpeed / 1.5f;
             jump = jumpForce / 2.5f;
             slowParticles.Play();
         }

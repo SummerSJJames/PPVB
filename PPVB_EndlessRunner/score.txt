@@ -4,3 +4,11 @@ Player1:79
 Summer:663
 Player1:475
 Player1:63
+Player1:639
+Summer:975
+Player1:915
+Player1:386
+Player1:1115
+Player1:457
+Player1:1064
+Player1:608

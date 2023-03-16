@@ -44,7 +44,7 @@ public class Rain : MonoBehaviour
         {
             Debug.Log("Raining");
             Instantiate(drop, new Vector2(Random.Range(leftOfScreen, rightOfScreen), 5.5f), quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(0.1f, 0.3f) / GameManager.instance.speed);
+            yield return new WaitForSeconds(Random.Range(0.2f, 0.35f) / GameManager.instance.speed);
         }
         playing = false;
     }
